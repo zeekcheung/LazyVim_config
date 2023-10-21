@@ -1,30 +1,26 @@
 local icons = require("utils.icons")
+local Util = require("lazyvim.util")
 
 return {
   "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  cmd = "Neotree",
   keys = {
     {
       "<leader>e",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,
-      desc = "Explorer",
+      desc = "Explorer NeoTree (cwd)",
     },
-    { "<leader>uo", "<cmd>Neotree document_symbols<cr>", desc = "Symbol Outline", silent = true },
+    {
+      "<leader>E",
+      function()
+        require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
+      end,
+      desc = "Explorer NeoTree (root dir)",
+    },
+    { "<leader>fe", false },
+    { "<leader>fE", false },
   },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
-  init = function()
-    if vim.fn.argc() == 1 then
-      local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      if stat and stat.type == "directory" then
-        require("neo-tree")
-      end
-    end
-  end,
   opts = {
     sources = { "filesystem", "buffers", "git_status", "document_symbols" },
     source_selector = {
@@ -41,8 +37,8 @@ return {
     },
     open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
     filesystem = {
-      bind_to_cwd = false,
-      follow_current_file = { enabled = true },
+      bind_to_cwd = true,
+      follow_current_file = { enabled = false },
       use_libuv_file_watcher = true,
       filtered_items = {
         visible = true,
@@ -57,14 +53,10 @@ return {
         never_show = {},
       },
     },
-    window = {
-      mappings = {
-        ["<space>"] = "none",
-      },
-    },
     default_component_configs = {
       indent = {
-        with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+        indent_size = 2,
+        with_expanders = false, -- if nil and file nesting is enabled, will enable expanders
         expander_collapsed = "",
         expander_expanded = "",
         expander_highlight = "NeoTreeExpander",
@@ -91,32 +83,26 @@ return {
       },
     },
 
-    -- define custom event handlers
-    -- see: https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/lua/neo-tree/events/init.lua
-    event_handlers = {
-      -- start editing file after adding
-      {
-        event = "file_added",
-        handler = function(file_path)
-          --   vim.cmd("edit " .. file_path .. "| startinsert!")
-          --   vim.cmd("Neotree Toggle")
-        end,
+    window = {
+      mappings = {
+        ["H"] = "prev_source",
+        ["L"] = "next_source",
+        ["s"] = "none", -- disable default mappings
+        ["<leftrelease>"] = "open", -- open node with single left click
       },
     },
+
+    -- define custom event handlers
+    -- see: https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/lua/neo-tree/events/init.lua
+    -- event_handlers = {
+    --   -- start editing file after adding
+    --   {
+    --     event = "file_added",
+    --     handler = function(file_path)
+    --       -- vim.cmd("edit " .. file_path .. "| startinsert!")
+    --       vim.cmd("edit " .. file_path .. "| Neotree Toggle")
+    --     end,
+    --   },
+    -- },
   },
-  config = function(_, opts)
-    require("neo-tree").setup(opts)
-
-    local augroup = vim.api.nvim_create_augroup
-    local autocmd = vim.api.nvim_create_autocmd
-
-    autocmd("TermClose", {
-      pattern = "*lazygit",
-      callback = function()
-        if package.loaded["neo-tree.sources.git_status"] then
-          require("neo-tree.sources.git_status").refresh()
-        end
-      end,
-    })
-  end,
 }

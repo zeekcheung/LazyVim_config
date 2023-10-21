@@ -1,7 +1,7 @@
 return {
   {
     "HiPhish/rainbow-delimiters.nvim",
-    enabled = true,
+    enabled = false,
     dependencies = "nvim-treesitter/nvim-treesitter",
     event = "LazyFile",
     config = function()

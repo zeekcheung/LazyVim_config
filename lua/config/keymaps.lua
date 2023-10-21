@@ -2,7 +2,36 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-------------------------------------- Delete default keymaps --------------------------------------
+local del = vim.keymap.del
+
+-- windows
+del("n", "<leader>ww")
+del("n", "<leader>wd")
+del("n", "<leader>w-")
+del("n", "<leader>w|")
+del("n", "<leader>-")
+del("n", "<leader>|")
+
+-- keywordprg
+del("n", "<leader>K")
+
+-- tabs
+del("n", "<leader><tab>l")
+del("n", "<leader><tab>f")
+del("n", "<leader><tab><tab>")
+del("n", "<leader><tab>]")
+del("n", "<leader><tab>d")
+del("n", "<leader><tab>[")
+
+-- trouble
+del("n", "<leader>xl")
+del("n", "<leader>xq")
+
+-------------------------------------- Add custom keymaps --------------------------------------
 local map = vim.keymap.set
+local ui = require("utils.ui")
+local Util = require("lazyvim.util")
 
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 map({ "x", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
@@ -26,8 +55,15 @@ map("i", "kk", "<esc>", { desc = "Better Escape" })
 map("n", "\\", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 map("n", "|", "<cmd>split<cr>", { desc = "Horizontal Split" })
 
--- move to window using the <ctrl> hjkl keys
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
+-- stylua: ignore start
+
+-- toggle options
+map("n", "<leader>uf", function() Util.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
+map("n", "<leader>uF", function() Util.format.toggle() end, { desc = "Toggle auto format (global)" })
+map("n", "<leader>uS", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
+-- map("n", "<leader>uC", ui.toggle_conceal, { desc = "Toggle conceal" })
+map("n", "<leader>ub", ui.toggle_background, { desc = "Toggle background" })
+map("n", "<leader>us", ui.toggle_signcolumn, { desc = "Toggle signcolumn" })
+map("n", "<leader>ul", ui.toggle_line_number, { desc = "Change line number" })
+map("n", "<leader>uu", ui.toggle_foldcolumn, { desc = "Toggle foldcolumn" })
+map("n", "<leader>uH", ui.toggle_ts_hightlight, { desc = "Toggle Treesitter Highlight" })

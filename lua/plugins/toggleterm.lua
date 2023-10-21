@@ -1,57 +1,72 @@
 return {
-  "akinsho/toggleterm.nvim",
-  cmd = "ToggleTerm",
-  config = true,
-  opts = {
-    open_mapping = [[<F7>]],
-    size = 10,
-    autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-    shading_factor = 2,
-    direction = "float",
-    float_opts = {
-      border = "curved",
-      highlights = { border = "Normal", background = "Normal" },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    cmd = { "ToggleTerm", "TermExec" },
+    keys = {
+      { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" },
+      { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal split" },
+      { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical split" },
+      { "<F7>", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
+      {
+        "<leader>tt",
+        function()
+          local cmd = tostring(math.floor(vim.fn.rand(vim.fn.srand()) % 1000 + 1)) .. "ToggleTerm"
+          vim.cmd(cmd)
+        end,
+        desc = "ToggleTerm new",
+      },
+
+      { mode = "t", "<esc>", [[<C-\><C-n>]], buffer = 0 },
+      { mode = "t", "<C-h>", [[<Cmd>wincmd h<CR>]], buffer = 0 },
+      { mode = "t", "<C-j>", [[<Cmd>wincmd j<CR>]], buffer = 0 },
+      { mode = "t", "<C-k>", [[<Cmd>wincmd k<CR>]], buffer = 0 },
+      { mode = "t", "<C-l>", [[<Cmd>wincmd l<CR>]], buffer = 0 },
+    },
+    opts = {
+      highlights = {
+        Normal = { link = "Normal" },
+        NormalNC = { link = "NormalNC" },
+        NormalFloat = { link = "NormalFloat" },
+        FloatBorder = { link = "FloatBorder" },
+        StatusLine = { link = "StatusLine" },
+        StatusLineNC = { link = "StatusLineNC" },
+        WinBar = { link = "WinBar" },
+        WinBarNC = { link = "WinBarNC" },
+      },
+      size = function(term)
+        if term.direction == "horizontal" then
+          return 15
+        elseif term.direction == "vertical" then
+          return vim.o.columns * 0.4
+        end
+      end,
+      on_create = function()
+        vim.opt.foldcolumn = "0"
+        vim.opt.signcolumn = "no"
+      end,
+      open_mapping = [[<F7>]],
+      shading_factor = 2,
+      direction = "float",
+      float_opts = { border = "rounded" },
+      hide_numbers = true,
+      autochdir = true,
+      start_in_insert = false,
+      winbar = {
+        enabled = false,
+      },
+      close_on_exit = true,
+      auto_scroll = false,
     },
   },
-  keys = function()
-    local utils = require("utils")
-    local default_keys = {
-      { "<leader>t", desc = "Terminal" },
-      { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" },
-      { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal" },
-      { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical" },
-      -- escape terminal mode
-      { mode = "t", "<esc>", [[<C-\><C-n>]], { desc = "Escape Terminal Mode" }, nowait = true },
-    }
-
-    local status_ok, toggleterm_terminal = pcall(require, "toggleterm.terminal")
-    if status_ok then
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = utils.float_term(Terminal, "lazygit", { dir = "git_dir" })
-      local node = utils.float_term(Terminal, "node")
-      local python = utils.float_term(Terminal, "python")
-
-      function _lazygit_toggle()
-        lazygit:toggle()
-      end
-      function _node_toggle()
-        node:toggle()
-      end
-      function _python_toggle()
-        python:toggle()
-      end
-
-      local additional_keys = {
-        { "<leader>gg", "<cmd>lua _lazygit_toggle()<cr>", desc = "Lazygit" },
-        { "<leader>tn", "<cmd>lua _node_toggle()<cr>", desc = "Node" },
-        { "<leader>tp", "<cmd>lua _python_toggle()<cr>", desc = "Python" },
-      }
-
-      for _, key in ipairs(additional_keys) do
-        table.insert(default_keys, key)
-      end
-    end
-
-    return default_keys
-  end,
+  {
+    "folke/which-key.nvim",
+    optional = true,
+    opts = {
+      plugins = { spelling = true },
+      defaults = {
+        ["<leader>t"] = { name = "+terminal" },
+      },
+    },
+  },
 }
