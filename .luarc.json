@@ -1,12 +1,15 @@
 {
-    "diagnostics.disable": [
-        "undefined-doc-name",
-        "need-check-nil",
-        "undefined-field",
-        "unused-local",
-        "deprecated"
-    ],
-    "diagnostics.globals": [
-        "vim"
-    ]
+  "diagnostics.disable": [
+    "undefined-doc-name",
+    "need-check-nil",
+    "undefined-field",
+    "unused-local",
+    "deprecated",
+    "inject-field",
+    "missing-fields",
+        "param-type-mismatch",
+        "assign-type-mismatch"
+  ],
+  "diagnostics.globals": ["vim"]
 }
+

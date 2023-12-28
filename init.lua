@@ -1,5 +1,8 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- Bootstrap lazy.nvim, LazyVim and other plugins
 require("config.lazy")
 
--- config vscode-neovim
+-- Config vscode-neovim
 require("config.vscode")
+
+-- Config neovide
+require("config.neovide")

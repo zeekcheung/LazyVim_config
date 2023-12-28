@@ -1,4 +1,4 @@
-local Util = require("lazyvim.util")
+local LazyVimUtil = require("lazyvim.util")
 
 local M = {}
 
@@ -9,7 +9,7 @@ end
 -- Toggle conceal
 function M.toggle_conceal()
   local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
-  Util.toggle("conceallevel", false, { 0, conceallevel })
+  LazyVimUtil.toggle("conceallevel", false, { 0, conceallevel })
 end
 
 -- Toggle Treesitter Highlight

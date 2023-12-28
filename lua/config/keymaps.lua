@@ -2,6 +2,9 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local LazyVimUtil = require("lazyvim.util")
+local Ui = require("util.ui")
+
 -------------------------------------- Delete default keymaps --------------------------------------
 local del = vim.keymap.del
 
@@ -30,8 +33,6 @@ del("n", "<leader>xq")
 
 -------------------------------------- Add custom keymaps --------------------------------------
 local map = vim.keymap.set
-local ui = require("utils.ui")
-local Util = require("lazyvim.util")
 
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 map({ "x", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
@@ -51,6 +52,14 @@ map("i", "jj", "<esc>", { desc = "Better Escape" })
 map("i", "jk", "<esc>", { desc = "Better Escape" })
 map("i", "kk", "<esc>", { desc = "Better Escape" })
 
+-- diagnostic
+map("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show Diagnostics" })
+
+-- formatting
+map({ "n", "v" }, "<leader>fm", function()
+  LazyVimUtil.format({ force = true })
+end, { desc = "Format" })
+
 -- split window
 map("n", "\\", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 map("n", "|", "<cmd>split<cr>", { desc = "Horizontal Split" })
@@ -58,12 +67,12 @@ map("n", "|", "<cmd>split<cr>", { desc = "Horizontal Split" })
 -- stylua: ignore start
 
 -- toggle options
-map("n", "<leader>uf", function() Util.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
-map("n", "<leader>uF", function() Util.format.toggle() end, { desc = "Toggle auto format (global)" })
-map("n", "<leader>uS", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
+map("n", "<leader>uf", function() LazyVimUtil.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
+map("n", "<leader>uF", function() LazyVimUtil.format.toggle() end, { desc = "Toggle auto format (global)" })
+map("n", "<leader>uS", function() LazyVimUtil.toggle("spell") end, { desc = "Toggle Spelling" })
 -- map("n", "<leader>uC", ui.toggle_conceal, { desc = "Toggle conceal" })
-map("n", "<leader>ub", ui.toggle_background, { desc = "Toggle background" })
-map("n", "<leader>us", ui.toggle_signcolumn, { desc = "Toggle signcolumn" })
-map("n", "<leader>ul", ui.toggle_line_number, { desc = "Change line number" })
-map("n", "<leader>uu", ui.toggle_foldcolumn, { desc = "Toggle foldcolumn" })
-map("n", "<leader>uH", ui.toggle_ts_hightlight, { desc = "Toggle Treesitter Highlight" })
+map("n", "<leader>ub", Ui.toggle_background, { desc = "Toggle background" })
+map("n", "<leader>us", Ui.toggle_signcolumn, { desc = "Toggle signcolumn" })
+map("n", "<leader>ul", Ui.toggle_line_number, { desc = "Change line number" })
+map("n", "<leader>uu", Ui.toggle_foldcolumn, { desc = "Toggle foldcolumn" })
+map("n", "<leader>uH", Ui.toggle_ts_hightlight, { desc = "Toggle Treesitter Highlight" })
