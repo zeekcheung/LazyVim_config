@@ -15,6 +15,7 @@ return {
 
   { "rose-pine/neovim", name = "rose-pine" },
 
+  { "folke/neodev.nvim", enabled = false },
   { "nvim-pack/nvim-spectre", enabled = false },
   { "lukas-reineke/indent-blankline.nvim", enabled = false },
   { "echasnovski/mini.indentscope", enabled = false },
@@ -119,6 +120,17 @@ return {
   {
     "nvimdev/dashboard-nvim",
     dependencies = "akinsho/bufferline.nvim",
+    init = function()
+      -- Hide the cmdline before DashboardLoaded
+      vim.opt.cmdheight = 0
+  
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'DashboardLoaded',
+        callback = function()
+          vim.opt.cmdheight = 1
+        end,
+      })
+    end,
     opts = function(_, opts)
       local logo = [[
        ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
@@ -288,7 +300,7 @@ return {
 
   {
     "folke/noice.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       presets = {
         lsp_doc_border = true, -- add a border to hover docs and signature help
