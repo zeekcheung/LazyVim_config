@@ -1,10 +1,6 @@
-if not vim.g.neovide then
-  return
-end
+if not vim.g.neovide then return end
 
-local function toggle_fullScreen()
-  vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
-end
+local function toggle_fullScreen() vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen end
 
 -- font
 vim.o.guifont = "JetBrainsMono Nerd Font:h17"
@@ -49,7 +45,7 @@ vim.g.neovide_cursor_trail_size = 0
 -- -- animate in insert mode
 -- vim.g.neovide_cursor_animate_in_insert_mode = true
 -- cursor particles
--- vim.g.neovide_cursor_vfx_mode = "railgun"
+vim.g.neovide_cursor_vfx_mode = "railgun"
 -- -- particle opacity
 -- vim.g.neovide_cursor_vfx_opacity = 200.0
 -- -- particle lifetime

@@ -8,7 +8,7 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
-  -- ui = { border = "rounded" },
+  ui = { border = "rounded" },
   spec = {
     -- add LazyVim and import its plugins
     {
@@ -32,7 +32,7 @@ require("lazy").setup({
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = false,
-    notify = true,     -- get a notification when new updates are found
+    notify = true, -- get a notification when new updates are found
     frequency = 60480, -- check for updates every week
   },
   change_detection = {

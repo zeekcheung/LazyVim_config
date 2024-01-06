@@ -2,10 +2,6 @@ local LazyVimUtil = require("lazyvim.util")
 
 local M = {}
 
-local function bool2str(bool)
-  return bool and "on" or "off"
-end
-
 -- Toggle conceal
 function M.toggle_conceal()
   local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
@@ -23,17 +19,11 @@ end
 
 --- Toggle background="dark"|"light"
 ---@param silent? boolean if true then don't sent a notification
-function M.toggle_background(silent)
-  vim.go.background = vim.go.background == "light" and "dark" or "light"
-  vim.notify(string.format("background=%s", vim.go.background))
-end
+function M.toggle_background(silent) vim.go.background = vim.go.background == "light" and "dark" or "light" end
 
 --- Toggle showtabline=2|0
 ---@param silent? boolean if true then don't sent a notification
-function M.toggle_tabline(silent)
-  vim.opt.showtabline = vim.opt.showtabline:get() == 0 and 2 or 0
-  vim.notify(string.format("tabline %s", bool2str(vim.opt.showtabline:get() == 2)))
-end
+function M.toggle_tabline(silent) vim.opt.showtabline = vim.opt.showtabline:get() == 0 and 2 or 0 end
 
 --- Toggle laststatus=3|2|0
 ---@param silent? boolean if true then don't sent a notification
@@ -50,7 +40,6 @@ function M.toggle_statusline(silent)
     vim.opt.laststatus = 0
     status = "off"
   end
-  vim.notify(string.format("statusline %s", status))
 end
 
 --- Toggle signcolumn="auto"|"no"
@@ -63,7 +52,6 @@ function M.toggle_signcolumn(silent)
   else
     vim.wo.signcolumn = "no"
   end
-  vim.notify(string.format("signcolumn=%s", vim.wo.signcolumn))
 end
 
 local last_active_foldcolumn
@@ -71,11 +59,8 @@ local last_active_foldcolumn
 ---@param silent? boolean if true then don't sent a notification
 function M.toggle_foldcolumn(silent)
   local curr_foldcolumn = vim.wo.foldcolumn
-  if curr_foldcolumn ~= "0" then
-    last_active_foldcolumn = curr_foldcolumn
-  end
+  if curr_foldcolumn ~= "0" then last_active_foldcolumn = curr_foldcolumn end
   vim.wo.foldcolumn = curr_foldcolumn == "0" and (last_active_foldcolumn or "1") or "0"
-  vim.notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
 end
 
 --- Change the number display modes
@@ -92,7 +77,6 @@ function M.toggle_line_number(silent)
   else -- not number and relativenumber
     vim.wo.relativenumber = false
   end
-  vim.notify(string.format("number %s, relativenumber %s", bool2str(vim.wo.number), bool2str(vim.wo.relativenumber)))
 end
 
 return M

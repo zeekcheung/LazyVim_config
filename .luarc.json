@@ -7,9 +7,11 @@
     "deprecated",
     "inject-field",
     "missing-fields",
-        "param-type-mismatch",
-        "assign-type-mismatch"
+    "param-type-mismatch",
+    "assign-type-mismatch"
   ],
-  "diagnostics.globals": ["vim"]
+  "diagnostics.globals": [
+    "vim",
+    "_lazygit_toggle"
+  ]
 }
-

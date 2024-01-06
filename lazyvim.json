@@ -1,16 +1,17 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.editor.aerial",
     "lazyvim.plugins.extras.formatting.prettier",
+    "lazyvim.plugins.extras.lang.clangd",
     "lazyvim.plugins.extras.lang.json",
     "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.util.dot",
-    "lazyvim.plugins.extras.util.project"
+    "lazyvim.plugins.extras.util.project",
+    "lazyvim.plugins.extras.editor.aerial"
   ],
   "news": {
     "NEWS.md": "2191",
-    "doc/news.txt": "19798"
+    "doc/news.txt": "20346"
   },
   "version": 2
 }
