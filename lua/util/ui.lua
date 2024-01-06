@@ -2,9 +2,7 @@ local LazyVimUtil = require("lazyvim.util")
 
 local M = {}
 
-local function bool2str(bool)
-  return bool and "on" or "off"
-end
+local function bool2str(bool) return bool and "on" or "off" end
 
 -- Toggle conceal
 function M.toggle_conceal()
@@ -71,9 +69,7 @@ local last_active_foldcolumn
 ---@param silent? boolean if true then don't sent a notification
 function M.toggle_foldcolumn(silent)
   local curr_foldcolumn = vim.wo.foldcolumn
-  if curr_foldcolumn ~= "0" then
-    last_active_foldcolumn = curr_foldcolumn
-  end
+  if curr_foldcolumn ~= "0" then last_active_foldcolumn = curr_foldcolumn end
   vim.wo.foldcolumn = curr_foldcolumn == "0" and (last_active_foldcolumn or "1") or "0"
   vim.notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
 end

@@ -1,35 +1,31 @@
+-- NOTE:
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
 
 local LazyVimUtil = require("lazyvim.util")
+local Util = require("util")
 local Ui = require("util.ui")
 
 -------------------------------------- Delete default keymaps --------------------------------------
-local del = vim.keymap.del
+local delete_default_keys = function(mode, keys)
+  for i, key in ipairs(keys) do
+    vim.keymap.del(mode, key)
+  end
+end
 
--- windows
-del("n", "<leader>ww")
-del("n", "<leader>wd")
-del("n", "<leader>w-")
-del("n", "<leader>w|")
-del("n", "<leader>-")
-del("n", "<leader>|")
-
--- keywordprg
-del("n", "<leader>K")
-
--- tabs
-del("n", "<leader><tab>l")
-del("n", "<leader><tab>f")
-del("n", "<leader><tab><tab>")
-del("n", "<leader><tab>]")
-del("n", "<leader><tab>d")
-del("n", "<leader><tab>[")
-
--- trouble
-del("n", "<leader>xl")
-del("n", "<leader>xq")
+-- stylua: ignore
+delete_default_keys(
+  "n",
+  {
+    -- windows
+    "<leader>ww", "<leader>wd", "<leader>w-", "<leader>w|", "<leader>-", "<leader>|",
+    -- tabs
+    "<leader><tab>d", "<leader><tab>f", "<leader><tab>l", "<leader><tab><tab>", "<leader><tab>[",
+    "<leader><tab>]",
+    -- trouble
+    "<leader>xl", "<leader>xq",
+  }
+)
 
 -------------------------------------- Add custom keymaps --------------------------------------
 local map = vim.keymap.set
@@ -44,8 +40,8 @@ map({ "n", "v", "x" }, "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 map({ "n", "v", "x" }, "<leader>qw", "<cmd>exit<cr>", { desc = "Quit current window" })
 
 -- goto line
-map({ "n", "v", "x" }, "gls", "^", { desc = "Goto line start" })
-map({ "n", "v", "x" }, "gle", "$", { desc = "Goto line end" })
+map({ "n", "v", "x" }, "<S-h>", "^", { desc = "Goto line start" })
+map({ "n", "v", "x" }, "<S-l>", "$", { desc = "Goto line end" })
 
 -- better escape
 map("i", "jj", "<esc>", { desc = "Better Escape" })
@@ -56,9 +52,7 @@ map("i", "kk", "<esc>", { desc = "Better Escape" })
 map("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show Diagnostics" })
 
 -- formatting
-map({ "n", "v" }, "<leader>fm", function()
-  LazyVimUtil.format({ force = true })
-end, { desc = "Format" })
+map({ "n", "v" }, "<leader>fm", function() LazyVimUtil.format({ force = true }) end, { desc = "Format" })
 
 -- split window
 map("n", "\\", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
