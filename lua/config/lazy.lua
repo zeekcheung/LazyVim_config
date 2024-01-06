@@ -7,8 +7,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- Auto change NormalFloat and FloatBorder highlight
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
+  end,
+})
+
 require("lazy").setup({
-  ui = { border = "rounded" },
+  -- see `:h nvim_open_win()` for more info
+  ui = { border = "solid" }, -- none/single/double/rounded/solid/shadow,
   spec = {
     -- add LazyVim and import its plugins
     {

@@ -4,6 +4,7 @@ local function toggle_fullScreen() vim.g.neovide_fullscreen = not vim.g.neovide_
 
 -- font
 vim.o.guifont = "JetBrainsMono Nerd Font:h17"
+vim.g.neovide_scale_factor = 0.8
 -- padding
 vim.g.neovide_padding_top = 0
 vim.g.neovide_padding_bottom = 0

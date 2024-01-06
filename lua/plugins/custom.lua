@@ -1,11 +1,12 @@
 vim.g.codeium_plugin_enabled = true
+vim.g.codeium_enabled = false
 
 return {
   {
     "LazyVim/LazyVim",
     opts = {
       -- configure LazyVim to load colorscheme
-      colorscheme = "tokyonight-night",
+      colorscheme = "everforest",
     },
   },
 
@@ -27,8 +28,6 @@ return {
     end,
   },
 
-  -- { "rose-pine/neovim", name = "rose-pine" },
-
   -- {
   --   "sainnhe/gruvbox-material",
   --   config = function(_, opts)
@@ -47,6 +46,20 @@ return {
   -- },
 
   {
+    "sainnhe/everforest",
+    config = function()
+      vim.o.background = "dark"
+      vim.g.everforest_background = "hard"
+      vim.g.everforest_enable_italic = 1
+      vim.g.everforest_transparent_background = 2
+      vim.g.everforest_dim_inactive_windows = 1
+      vim.g.everforest_show_eob = 0
+      vim.g.everforest_diagnostic_text_highlight = 1
+      vim.g.everforest_diagnostic_virtual_text = "colored"
+    end,
+  },
+
+  {
     "NvChad/nvim-colorizer.lua",
     event = "LazyFile",
     config = true,
@@ -54,6 +67,7 @@ return {
 
   {
     "j-hui/fidget.nvim",
+    enabled = false,
     event = "LazyFile",
     opts = {
       notification = {

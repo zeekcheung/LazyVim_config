@@ -10,6 +10,7 @@ local opt = vim.opt
 
 opt.backup = false -- Don't keep a backup after overwriting a file
 opt.list = false -- Don't show <Tab> and end-of-file
+opt.pumblend = 0 -- Don't use popup blend
 opt.swapfile = false -- Don't use a swap file for this buffer
 -- opt.guicursor = -- Change cursor style
 --   "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait100-blinkoff50-blinkon75-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"

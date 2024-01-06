@@ -93,7 +93,7 @@ return {
   ]]
 
       -- padding-top: 2 * \n
-      logo = string.rep("\n", 2) .. logo .. ""
+      logo = string.rep("\n", 3) .. logo .. "\n"
 
       opts.hide = {
         -- this is taken care of by lualine
@@ -262,6 +262,8 @@ return {
           end
         end, { "i", "s" }),
       })
+
+      opts.experimental.ghost_text = false
     end,
   },
 
@@ -311,6 +313,7 @@ return {
     opts = {
       timeout = 2000,
       top_down = false,
+      background_colour = "#000000",
     },
   },
 
@@ -396,6 +399,7 @@ return {
         LazyVimUtil.telescope("colorscheme", { enable_preview = true }),
         desc = "Colorscheme with preview",
       },
+      { "<leader>fw", "<cmd>Telescope live_grep<cr>", desc = "String" },
       -- git
       { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
@@ -444,10 +448,18 @@ return {
 
   {
     "folke/noice.nvim",
-    enabled = false,
+    enabled = true,
     opts = {
       presets = {
         lsp_doc_border = true,
+      },
+      views = {
+        mini = {
+          win_options = {
+            -- transparent background
+            winblend = 0,
+          },
+        },
       },
     },
     -- stylua: ignore
